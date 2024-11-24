@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -18,24 +17,39 @@
 }
 
 body {
- 
+  margin: 0;
+  padding: 0;
 }
 
-/* styles/globals.css */
-.dot-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 10px,
-    gray 10px,
-    gray 20px
-  );
-  z-index: -1;
-  background-size: 30px 30px; /* Adjust size as needed */
+/* styles.css */
+a {
+  color: #4b94fc; /* Warna default */
 }
 
+a:hover {
+  color: black; /* Warna saat hover */
+}
+
+a.active {
+  color: black; /* Warna saat aktif */
+}
+
+/* styles.css */
+.button-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+  border-radius: 1rem; /* rounded-xl */
+  background-color: #1e3a8a; /* bg-blue-new */
+  padding: 5px 30px; /* py-[5px] px-[30px] */
+  font-size: 18px; /* text-[18px] */
+  font-weight: bold; /* font-bold */
+  color: white; /* text-white */
+  transition: background-color 0.2s ease-in-out; /* transition */
+  cursor: pointer; /* Menunjukkan bahwa ini adalah tombol yang dapat diklik */
+}
+
+.button-login:hover {
+  background-color: #4b94fc; /* hover:bg-blue-600 */
+}

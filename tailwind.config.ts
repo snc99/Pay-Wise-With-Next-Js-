@@ -1,3 +1,4 @@
+import daisyui from "daisyui";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -9,17 +10,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'custom-blue': '#458FF6',
-        'custom-green': '#2ECC71',
-        'custom-red': '#E74C3C',
-        'custom-purple': '#9B59B6',
-        'custom-yellow': '#F1C40F',
-        'custom-orange': '#E67E22',
-        'custom-gery': '#7D7987',
-        'custom-blue-new': '#85A7FF',
+        blue: "#458FF6",
+        green: "#2ECC71",
+        red: "#E74C3C",
+        purple: "#9B59B6",
+        yellow: "#F1C40F",
+        orange: "#E67E22",
+        gery: "#7D7987",
+        "blue-new": "#85A7FF",
+        card: "#DBEAFF",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
 export default config;
