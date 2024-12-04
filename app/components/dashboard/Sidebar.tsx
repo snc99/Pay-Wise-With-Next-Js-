@@ -1,43 +1,81 @@
 import React from "react";
-import { FaTachometerAlt, FaCog, FaUser } from "react-icons/fa";
+import {
+  FaTachometerAlt,
+  FaUsers,
+  FaMoneyBillWave,
+  FaCreditCard,
+  FaFileAlt,
+  FaCog,
+} from "react-icons/fa";
 
 export default function Sidebar() {
   return (
-    <>
-      <aside className="bg-base-200 h-screen w-64 shadow-lg">
-        <div className="p-4">
-          <h2 className="mb-6 text-center text-2xl font-bold">Pay Wise</h2>
-          <ul className="menu">
-            <li className="mb-2">
-              <a
-                href="#"
-                className="hover:bg-blue-500 flex items-center rounded-lg p-2 text-base text-gray-700 transition duration-200 hover:text-white"
-              >
-                <FaTachometerAlt className="mr-3" />
-                Dashboard
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                href="#"
-                className="hover:bg-blue-500 flex items-center rounded-lg p-2 text-base text-gray-700 transition duration-200 hover:text-white"
-              >
-                <FaCog className="mr-3" />
-                Pengaturan
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                href="#"
-                className="hover:bg-blue-500 flex items-center rounded-lg p-2 text-base text-gray-700 transition duration-200 hover:text-white"
-              >
-                <FaUser className="mr-3" />
-                Profil
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-    </>
+    <aside className="flex h-screen w-64 flex-col bg-base-200 shadow-lg">
+      <div className="flex-grow p-4">
+        <h2 className="mb-6 text-center text-3xl font-bold">Pay Wise</h2>
+        <ul className="menu">
+          <div className="mt-auto">
+            <a
+              href="#"
+              className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+            >
+              <FaTachometerAlt className="mr-3" />
+              Dashboard
+            </a>
+            <hr className="my-2 border-gray-300 transition duration-200 hover:bg-blue" />
+          </div>
+          <div className="mt-auto">
+            <a
+              href="#"
+              className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+            >
+              <FaUsers className="mr-3" />
+              Pengguna
+            </a>
+            <hr className="my-2 border-gray-300 transition duration-200 hover:bg-blue" />
+          </div>
+          <div className="mt-auto">
+            <a
+              href="#"
+              className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+            >
+              <FaMoneyBillWave className="mr-3" />
+              Hutang
+            </a>
+            <hr className="my-2 border-gray-300 transition duration-200 hover:bg-blue" />
+          </div>
+          <div className="mt-auto">
+            <a
+              href="#"
+              className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+            >
+              <FaCreditCard className="mr-3" />
+              Pembayaran
+            </a>
+            <hr className="my-2 border-gray-300 transition duration-200 hover:bg-blue" />
+          </div>
+          <div className="mt-auto">
+            <a
+              href="#"
+              className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+            >
+              <FaFileAlt className="mr-3" />
+              Laporan
+            </a>
+            <hr className="my-2 border-gray-300 transition duration-200 hover:bg-blue" />
+          </div>
+        </ul>
+      </div>
+      {/* Item Pengaturan di bagian paling bawah */}
+      <div className="p-4">
+        <a
+          href="#"
+          className="flex items-center rounded-lg p-2 text-lg text-gray-700 transition duration-200 hover:bg-gray-200 hover:text-blue"
+        >
+          <FaCog className="mr-3" />
+          Pengaturan
+        </a>
+      </div>
+    </aside>
   );
 }
