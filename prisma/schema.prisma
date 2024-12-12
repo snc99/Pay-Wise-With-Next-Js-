@@ -14,8 +14,38 @@ datasource db {
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
+  id       String    @id @default(cuid())
   name     String?
   email    String  @unique
   password String
+}
+
+model Users {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  debts     Debt[]   @relation("User Debts") // Relasi ke model Debt
+}
+
+model Debt {
+  id        String   @id @default(cuid())
+  user      Users    @relation("User Debts", fields: [users_id], references: [id])
+  users_id  String
+  amount    Decimal
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  payments   Payment[] @relation("DebtPayments") // Relasi ke model Payment
+}
+
+model Payment {
+  id                String   @id @default(cuid())
+  debt              Debt     @relation("DebtPayments", fields: [debt_record_id], references: [id])
+  debt_record_id    String
+  amount_paid       String
+  remaining_amount  Decimal
+  payment_date      DateTime
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

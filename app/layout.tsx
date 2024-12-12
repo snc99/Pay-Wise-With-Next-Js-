@@ -28,13 +28,13 @@ export default function RootLayout({
       <head>{/* link meta data  */}</head>
       <body className={mulish.className}>
         {/* Render Header jika bukan di halaman login */}
-        {!disableNavbar.includes(pathname) && <Header />}
+        {/* {!disableNavbar.includes(pathname) && <Header />} */}
 
         {/* Konten utama */}
         {children}
 
         {/* Render Footer jika bukan di halaman login */}
-        {!disableFooter.includes(pathname) && <Footer />}
+        {/* {!disableFooter.includes(pathname) && <Footer />} */}
       </body>
     </html>
   );

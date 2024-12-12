@@ -31,7 +31,8 @@ a:hover {
 }
 
 a.active {
-  color: black; /* Warna saat aktif */
+  color: #4b94fc;
+  background-color: hsl(225, 12%, 87%);
 }
 
 /* styles.css */

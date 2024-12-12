@@ -22,7 +22,7 @@ const authOptions: AuthOptions = {
 
         const { email, password } = credentials;
         const user = await prisma.admin.findUnique({
-          where: { email: email },
+          where: { email },
         });
 
         if (!user) {
@@ -34,7 +34,7 @@ const authOptions: AuthOptions = {
         }
 
         return {
-          id: user.id.toString(),
+          id: user.id,
           email: user.email,
           name: user.name || null,
         };

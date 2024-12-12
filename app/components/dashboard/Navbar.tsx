@@ -14,15 +14,15 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar mt-2 bg-base-200">
+    <div className="navbar w-full bg-base-200">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">
-          Hi...
+          Hi
           {status === "loading"
-            ? "Loading..."
+            ? " " + "Loading..."
             : session
-              ? JSON.stringify(session)
-              : "No Session"}
+              ? " " + session.user.name
+              : " " + "No Session"}
         </a>
       </div>
       <div className="flex-none gap-2">
