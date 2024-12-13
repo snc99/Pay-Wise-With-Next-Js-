@@ -1,9 +1,10 @@
-import { NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
+// Pastikan Anda menggunakan tipe User yang sudah dideklarasikan
 const prisma = new PrismaClient();
 
 const authOptions: AuthOptions = {
@@ -25,11 +26,10 @@ const authOptions: AuthOptions = {
         });
 
         if (!user) {
-          throw new Error("User not found");
+          throw new Error("User  not found");
         }
 
-        const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) {
+        if (!(await bcrypt.compare(password, user.password))) {
           throw new Error("Invalid password");
         }
 
@@ -47,21 +47,24 @@ const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.id = user.id; // Menambahkan id ke token
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as string; // Menambahkan id ke session
       }
       return session;
     },
   },
 };
 
-// Handler untuk API routes
-const handler = NextAuth(authOptions);
+// Named exports untuk setiap metode HTTP
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+  return NextAuth(req, res, authOptions);
+}
 
-// Ekspor fungsi GET dan POST
-export { handler as GET, handler as POST };
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  return NextAuth(req, res, authOptions);
+}
