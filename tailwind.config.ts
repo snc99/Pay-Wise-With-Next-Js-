@@ -10,14 +10,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        blue: "#458FF6",
+        blue: "#45A7FF",
         green: "#2ECC71",
         red: "#E74C3C",
         purple: "#9B59B6",
         yellow: "#F1C40F",
         orange: "#E67E22",
         gery: "#7D7987",
-        "blue-new": "#85A7FF",
+        "blue-new": "#458FF6",
         card: "#DBEAFF",
       },
     },

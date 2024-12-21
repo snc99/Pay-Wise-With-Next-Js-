@@ -21,18 +21,16 @@ body {
   padding: 0;
 }
 
-/* styles.css */
 a {
-  color: #4b94fc; /* Warna default */
+  color: #4b94fc;
 }
 
 a:hover {
-  color: black; /* Warna saat hover */
+  color: black;
 }
 
 a.active {
-  color: #4b94fc;
-  background-color: hsl(225, 12%, 87%);
+  color: black;
 }
 
 /* styles.css */
@@ -40,17 +38,20 @@ a.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem; /* 8px */
-  border-radius: 1rem; /* rounded-xl */
-  background-color: #1e3a8a; /* bg-blue-new */
-  padding: 5px 30px; /* py-[5px] px-[30px] */
-  font-size: 18px; /* text-[18px] */
-  font-weight: bold; /* font-bold */
-  color: white; /* text-white */
-  transition: background-color 0.2s ease-in-out; /* transition */
-  cursor: pointer; /* Menunjukkan bahwa ini adalah tombol yang dapat diklik */
+  gap: 0.5rem;
+  border-radius: 0, 5rem;
+  background-color: blue-new;
+  padding: 5px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .button-login:hover {
-  background-color: #4b94fc; /* hover:bg-blue-600 */
+  background-color: #45a7ff;
 }
+
+/* .active {
+  color: red;
+} */
