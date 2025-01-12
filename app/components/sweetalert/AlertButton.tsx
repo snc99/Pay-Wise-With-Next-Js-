@@ -1,6 +1,7 @@
 "use client";
 
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 interface AlertProps {
   title: string;
@@ -19,17 +20,18 @@ export default function Alert({
   onClose,
   trigger,
 }: AlertProps) {
-  // Menampilkan alert hanya jika trigger bernilai true
-  if (trigger) {
-    Swal.fire({
-      title,
-      text,
-      icon,
-      confirmButtonText,
-    }).then(() => {
-      if (onClose) onClose(); // Panggil callback setelah alert ditutup
-    });
-  }
+  useEffect(() => {
+    if (trigger) {
+      Swal.fire({
+        title,
+        text,
+        icon,
+        confirmButtonText,
+      }).then(() => {
+        if (onClose) onClose(); // Panggil callback setelah alert ditutup
+      });
+    }
+  }, [trigger, title, text, icon, confirmButtonText, onClose]); // Trigger alert hanya saat salah satu nilai berubah
 
-  return null; // Tidak ada UI lain yang perlu ditampilkan
+  return null;
 }

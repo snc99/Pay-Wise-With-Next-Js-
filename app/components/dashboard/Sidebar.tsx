@@ -18,8 +18,9 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="flex h-screen w-64 flex-col bg-base-200 shadow-lg">
+    <aside className="flex h-screen w-64 flex-col bg-base-200">
       <div className="flex-grow p-4">
+      <div className="overflow-x-auto">
         <h2 className="mb-6 text-center text-3xl font-bold">Pay Wise</h2>
         <ul className="menu">
           <Link
@@ -77,6 +78,7 @@ export default function Sidebar() {
           <FaCog className="mr-3" />
           Pengaturan
         </Link>
+      </div>
       </div>
     </aside>
   );

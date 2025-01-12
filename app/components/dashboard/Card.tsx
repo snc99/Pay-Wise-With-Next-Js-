@@ -23,7 +23,7 @@ export default function Card() {
           </div>
         </div>
       </div>
-      <div className="card mb-5 bg-base-100 shadow-xl">
+      <div className="card mb-5 bg-base-200">
         <div className="card-body">
           <h2 className="card-title">Daftar Pencatatan Hutang</h2>
           <div className="overflow-x-auto">

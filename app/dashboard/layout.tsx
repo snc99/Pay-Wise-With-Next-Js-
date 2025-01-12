@@ -11,18 +11,18 @@ const DashboardLayout: React.FC<{
 }> = ({ children }) => {
   return (
     <SessionProvider>
-      <div className="flex min-h-screen flex-col">
-        <div className="flex flex-1">
-          <Sidebar />
+      <div className="flex min-h-screen">
+        <Sidebar />
+        <div className="flex flex-1 flex-col">
+          <header>
+            <Navbar />
+          </header>
           <main className="flex-1 overflow-hidden p-4">
-            {" "}
-            {/* Tambahkan overflow-hidden */}
-            <header className="p-0">
-              <Navbar />
-            </header>
-            <section className="mt-4">{children}</section>
-            <Footer />
+            {children}
           </main>
+          <footer>
+            <Footer />
+          </footer>
         </div>
       </div>
     </SessionProvider>

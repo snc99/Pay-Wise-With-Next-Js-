@@ -7,6 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class', 
   theme: {
     extend: {
       colors: {
@@ -18,10 +19,13 @@ const config: Config = {
         orange: "#E67E22",
         gery: "#7D7987",
         "blue-new": "#458FF6",
-        card: "#DBEAFF",
+        // card: "#DBEAFF",
       },
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark", "retro"], // Menambahkan tema yang tersedia
+  },
 };
 export default config;
