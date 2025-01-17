@@ -5,12 +5,14 @@ import Navbar from "../components/dashboard/Navbar";
 import Sidebar from "../components/dashboard/Sidebar";
 import Footer from "../components/dashboard/Footer";
 import { SessionProvider } from "next-auth/react";
+import { ToastProvider } from "../components/sweetalert/Toast";
 
 const DashboardLayout: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
     <SessionProvider>
+      <ToastProvider>
       <div className="flex min-h-screen">
         <Sidebar />
         <div className="flex flex-1 flex-col">
@@ -23,6 +25,7 @@ const DashboardLayout: React.FC<{
           </footer>
         </div>
       </div>
+      </ToastProvider>
     </SessionProvider>
   );
 };

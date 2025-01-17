@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/app/components/button/themeToggle";
 import { FaUserCircle } from "react-icons/fa";
+import Image from "next/image";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -28,7 +29,7 @@ const Navbar = () => {
           <div tabIndex={0} role="button" className="btn btn-circle btn-ghost">
             <div className="flex h-10 w-10 items-center justify-center">
               {session?.user?.image ? (
-                <img
+                <Image
                   alt="User Avatar"
                   src={session.user.image}
                   className="h-10 w-10 rounded-full"

@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Toast from "@/app/components/sweetalert/Toast"; // Pastikan path sesuai
+import Toast, { useToast } from "@/app/components/sweetalert/Toast"; // Pastikan path sesuai
 import Card from "../components/dashboard/Card";
 
 export default function Dashboard() {
-  const [showToast, setShowToast] = useState(false);
+  const { showToast, setToastShown } = useToast();
 
   useEffect(() => {
-    // Menampilkan toast setelah login berhasil
-    setShowToast(true);
-  }, []);
+    if (showToast) {
+      setToastShown(); // Matikan toast setelah pertama kali ditampilkan
+    }
+  }, [showToast, setToastShown]);
 
   return (
     <div>
@@ -19,3 +20,4 @@ export default function Dashboard() {
     </div>
   );
 }
+
