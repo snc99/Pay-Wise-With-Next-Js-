@@ -10,7 +10,6 @@ const Search = () => {
   const { replace } = useRouter();
 
   const hadleSearch = useDebouncedCallback((term: string) => {
-    // console.log(term);
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
     if (term) {
@@ -25,7 +24,7 @@ const Search = () => {
     <div className="relative flex flex-1">
       <input
         type="text"
-        className="w-full rounded-sm border-gray-200 py-2 pl-10 text-sm outline-2"
+        className="w-full rounded-sm border-gray-200 py-2 pl-10 text-sm outline-none outline-2 focus:outline-blue-400"
         placeholder="Search..."
         onChange={(e) => hadleSearch(e.target.value)}
         defaultValue={searchParams.get("query")?.toString()}

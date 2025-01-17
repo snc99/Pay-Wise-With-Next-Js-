@@ -1,49 +1,33 @@
 import React from "react";
+import SearchInTable from "@/app/components/search/SearchInTable";
+import TableDebt from "@/app/components/table/tabel-debt";
+import { CreateDebt } from "@/app/components/button/buttonDebt";
+import Pagination from "@/app/components/pagination/pagination";
+import { getUsersPages } from "@/lib/dataUser";
 
-export default function page() {
+const debtPage = async ({
+  searchParams,
+}: {
+  searchParams?: { query?: string; page?: string };
+}) => {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await getUsersPages(query);
+
   return (
-    <div>
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Total Tagihan</th>
-            <th>Bayar</th>
-            <th>Sisa Tagihan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="hover:bg-gray-100 hover:text-blue">
-            <td>1</td>
-            <td>John Doe</td>
-            <td>Rp 1.000.000</td>
-            <td>Rp 600.000</td>
-            <td>Rp 400.000</td>
-          </tr>
-          <tr className="hover:bg-gray-100 hover:text-blue">
-            <td>2</td>
-            <td>Jane Smith</td>
-            <td>Rp 750.000</td>
-            <td>Rp 300.000</td>
-            <td>Rp 450.000</td>
-          </tr>
-          <tr className="hover:bg-gray-100 hover:text-blue">
-            <td>3</td>
-            <td>Michael Johnson</td>
-            <td>Rp 2.500.000</td>
-            <td>Rp 1.500.000</td>
-            <td>Rp 1.000.000</td>
-          </tr>
-          <tr className="hover:bg-gray-100 hover:text-blue">
-            <td>4</td>
-            <td>Emily Davis</td>
-            <td>Rp 1.200.000</td>
-            <td>Rp 1.200.000</td>
-            <td>Rp 0</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="card rounded-md bg-base-200">
+      <div className="m-5">
+        <SearchInTable />
+      </div>
+      <div className="mx-5 flex justify-end">
+        <CreateDebt />
+      </div>
+      <TableDebt query={query} currentPage={currentPage} />
+      <div className="mb-4 mt-4 flex justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
-}
+};
+
+export default debtPage;

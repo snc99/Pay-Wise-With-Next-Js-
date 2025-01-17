@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MdOutlineLogin } from "react-icons/md";
+import ThemeToggle from "@/app/components/button/themeToggle";
+
 
 export default function Header() {
   const router = useRouter();
@@ -96,6 +98,7 @@ export default function Header() {
                 Login <MdOutlineLogin size={20} />
               </span>
             </button>
+                  <ThemeToggle />
           </ul>
         </nav>
       </header>

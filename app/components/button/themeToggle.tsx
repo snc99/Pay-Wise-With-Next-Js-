@@ -11,7 +11,9 @@ export default function ThemeToggle() {
       setTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
     } else {
-      const userPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const userPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
       if (userPrefersDark) {
         setTheme("dark");
         document.documentElement.setAttribute("data-theme", "dark");
@@ -22,23 +24,46 @@ export default function ThemeToggle() {
     }
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "retro" ? "dark" : theme === "dark" ? "light" : "retro";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
+  const handleThemeChange = (selectedTheme: string) => {
+    setTheme(selectedTheme);
+    document.documentElement.setAttribute("data-theme", selectedTheme);
+    localStorage.setItem("theme", selectedTheme);
   };
 
   return (
-    <label className="swap swap-rotate">
-      {/* Tombol Sakelar */}
-      <input type="checkbox" onChange={toggleTheme} />
-      <div className="swap-on">
-        <span className="icon">🌞</span> {/* Ikon Light Mode */}
-      </div>
-      <div className="swap-off">
-        <span className="icon">🌙</span> {/* Ikon Dark Mode */}
-      </div>
-    </label>
+    <div className="dropdown dropdown-end">
+      <label tabIndex={0} className="btn btn-ghost">
+        🌈
+      </label>
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content z-[1] w-32 rounded-md bg-base-100 p-2 shadow"
+      >
+        <li>
+          <a
+            onClick={() => handleThemeChange("light")}
+            className={`${theme === "light" ? "active text-blue-500" : ""}`}
+          >
+            Light
+          </a>
+        </li>
+        <li>
+          <a
+            onClick={() => handleThemeChange("dark")}
+            className={`${theme === "dark" ? "active text-blue-500" : ""}`}
+          >
+            Dark
+          </a>
+        </li>
+        <li>
+          <a
+            onClick={() => handleThemeChange("retro")}
+            className={`${theme === "retro" ? "active text-blue-500" : ""}`}
+          >
+            Retro
+          </a>
+        </li>
+      </ul>
+    </div>
   );
 }

@@ -17,9 +17,7 @@ const DashboardLayout: React.FC<{
           <header>
             <Navbar />
           </header>
-          <main className="flex-1 overflow-hidden p-4">
-            {children}
-          </main>
+          <main className="flex-1 overflow-hidden p-4">{children}</main>
           <footer>
             <Footer />
           </footer>

@@ -1,3 +1,5 @@
+// Server Actions User
+
 "use server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -61,8 +63,11 @@ export const deleteUser = async (id: string) => {
     await prisma.users.delete({
       where: { id },
     });
+    return { message: "User successfully deleted" }; // Pastikan mengembalikan objek dengan message
   } catch (error) {
-    return { message: "Failed to delete user" };
+    console.error(error);
+    return { message: "Failed to delete user" }; // Kembalikan pesan error jika gagal
+  } finally {
+    revalidatePath("/dashboard/users");
   }
-  revalidatePath("/dashboard/users");
 };

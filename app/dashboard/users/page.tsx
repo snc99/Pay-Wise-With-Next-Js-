@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 import TableUser from "@/app/components/table/table-user";
-import Search from "@/app/components/search/Search";
-import { CreateUsers } from "@/app/components/button/button";
-import { getUsersPages } from "@/lib/data";
+import SearchInTable from "@/app/components/search/SearchInTable";
+import { CreateUsers } from "@/app/components/button/buttonUser";
+import { getUsersPages } from "@/lib/dataUser";
 import Pagination from "@/app/components/pagination/pagination";
 
 const UserPage = async ({
@@ -19,16 +19,11 @@ const UserPage = async ({
   const totalPages = await getUsersPages(query);
 
   return (
-    <div>
-      <div className="mr-2 flex justify-end">
-        {/* <Link
-          href="/dashboard/users/create"
-          className="btn items-center hover:text-blue"
-        >
-          <FaPlus />
-          <span className="ml-2">Tambah User</span>
-        </Link> */}
-        <Search />
+    <div className="card rounded-md bg-base-200">
+      <div className="m-5">
+        <SearchInTable />
+      </div>
+      <div className="mx-5 flex justify-end">
         <CreateUsers />
       </div>
       <TableUser query={query} currentPage={currentPage} />

@@ -1,16 +1,16 @@
 import React from "react";
-import { getUsers } from "@/lib/dataUser";
+import { getDebt } from "@/lib/dataDebt";
 import { formatDate } from "@/lib/util";
-import { EditUsers, DeleteUsers } from "../button/buttonUser";
+import { DeleteDebt } from "../button/buttonDebt";
 
-const TableUser = async ({
+const TableDebt = async ({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) => {
-  const users = await getUsers(query, currentPage);
+  const debts = await getDebt(query, currentPage);
   return (
     <div>
       <table className="table w-full">
@@ -18,31 +18,35 @@ const TableUser = async ({
           <tr>
             <th>No</th>
             <th>Nama</th>
-            <th>Phone</th>
-            <th>Tanggal</th>
+            <th>Tanggal Berhutang</th>
+            <th>Jumlah Hutang</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody className="text-center">
-          {users.length === 0 ? (
+          {debts.length === 0 ? (
             <tr>
               <td colSpan={5} className="mb-2 text-center">
-                Data Pengguna tidak ditemukan
+                Data tagihan tidak ditemukan
               </td>
             </tr>
           ) : (
-            users.map((user, index) => (
+            debts.map((debt, index) => (
               <tr
-                key={user.id}
+                key={debt.id}
                 className="hover:bg-gray-100 hover:text-blue-500"
               >
                 <td>{index + 1}</td>
-                <td>{user.name}</td>
-                <td>{user.phone}</td>
-                <td>{formatDate(user.createdAt.toString())}</td>
+                <td>{debt.user.name}</td>
+                <td>{formatDate(debt.createdAt.toString())}</td>
+                <td>
+                  {parseFloat(debt.amount.toString()).toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
+                </td>
                 <td className="flex justify-center gap-1 py-3">
-                  <EditUsers id={user.id} />
-                  <DeleteUsers id={user.id} />
+                  <DeleteDebt id={debt.id} />
                 </td>
               </tr>
             ))
@@ -53,4 +57,4 @@ const TableUser = async ({
   );
 };
 
-export default TableUser;
+export default TableDebt;

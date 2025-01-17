@@ -31,12 +31,12 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
     isActive: boolean;
   }) => {
     const className = cslx(
-      "flex h-10 w-10 items-center justify-center text-sm border",
+      "flex h-10 w-10 items-center justify-center text-sm border text-gray-700",
       {
         "rounded-l-lg": position === "first" || position === "single",
         "rounded-r-lg": position === "last" || position === "single",
-        "z-10 border-blue-new bg-blue text-white": isActive,
-        "hover:bg-gray-200": !isActive && position !== "middle",
+        "z-10 border-blue-300 bg-blue-400 text-white": isActive,
+        "hover:bg-blue-300 border-blue-300": !isActive && position !== "middle",
         "text-gray-300 pointer-events-none": position === "middle",
       },
     );
@@ -61,10 +61,10 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
     const className = cslx(
       "flex h-10 w-10 items-center justify-center text-sm border",
       {
-        "pointer-events-none text-gray-300": isDisabled,
-        "hover:bg-gray-200": !isDisabled,
-        "mr-2": direction === "left",
-        "ml-2": direction === "right",
+        "pointer-events-none text-gray-500 bg-gray-300": isDisabled,
+        "hover:bg-blue-300": !isDisabled,
+        "mr-2 bg-blue-400 rounded-l-lg text-gray-700": direction === "left",
+        "ml-2 bg-blue-400 rounded-r-lg text-gray-700": direction === "right",
       },
     );
 

@@ -1,5 +1,5 @@
-import UpdateFormUser from "@/app/components/form/edit-users";
-import { getUsersById } from "@/lib/data";
+import UpdateFormUser from "@/app/components/form/user/edit-users";
+import { getUsersById } from "@/lib/dataUser";
 import { notFound } from "next/navigation";
 
 const UpdateUserPage = async ({ params }: { params: { id: string } }) => {
@@ -10,8 +10,8 @@ const UpdateUserPage = async ({ params }: { params: { id: string } }) => {
     notFound();
   }
   return (
-    <div className="mx-auto mt-5 max-w-md">
-      <h1 className="text-2xl font-bold">Update User</h1>
+    <div className="card mx-auto my-5 max-w-full rounded-lg bg-base-200 p-6 shadow-lg">
+      <h1 className="mb-4 text-center text-2xl font-bold">Edit Pengguna</h1>
       <UpdateFormUser user={user} />
     </div>
   );
