@@ -20,7 +20,6 @@ const authOptions: AuthOptions = {
           throw new Error("Email and password are required");
         }
 
-        // Cari admin berdasarkan email
         const admin = await prisma.admin.findUnique({
           where: { email: credentials.email },
         });
@@ -29,7 +28,6 @@ const authOptions: AuthOptions = {
           throw new Error("No user found with the email");
         }
 
-        // Validasi password
         const isPasswordValid = await bcrypt.compare(
           credentials.password,
           admin.password,
@@ -39,13 +37,14 @@ const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        // Kembalikan data pengguna yang valid
         return { id: admin.id, name: admin.name, email: admin.email };
       },
     }),
   ],
   session: {
-    strategy: "jwt", // Gunakan strategi JWT
+    strategy: "jwt", 
+    maxAge: 30 * 60,  
+    updateAge: 15 * 60, 
   },
   callbacks: {
     async jwt({
@@ -56,13 +55,13 @@ const authOptions: AuthOptions = {
       user?: { id: string; name?: string | null; email: string };
     }) {
       if (user) {
-        token.id = user.id; // Tambahkan id ke dalam token
+        token.id = user.id; 
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
-        session.user.id = token.id as string; // Pastikan `id` di-cast ke tipe string
+        session.user.id = token.id as string; 
       }
       return session;
     },

@@ -6,6 +6,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Footer from "../components/dashboard/Footer";
 import { SessionProvider } from "next-auth/react";
 import { ToastProvider } from "../components/sweetalert/Toast";
+import AutoLogout from "../components/session/AutoLogout";
 
 const DashboardLayout: React.FC<{
   children: React.ReactNode;
@@ -13,6 +14,7 @@ const DashboardLayout: React.FC<{
   return (
     <SessionProvider>
       <ToastProvider>
+      <AutoLogout />
       <div className="flex min-h-screen">
         <Sidebar />
         <div className="flex flex-1 flex-col">
@@ -25,6 +27,7 @@ const DashboardLayout: React.FC<{
           </footer>
         </div>
       </div>
+      <AutoLogout />
       </ToastProvider>
     </SessionProvider>
   );
