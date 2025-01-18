@@ -30,12 +30,12 @@ const CreateFormDebt = () => {
     error: { amount: null, user: null },
   });
 
-  const [pending, setPending] = useState(false); // Add the pending state
+  const [pending, setPending] = useState(false);
 
   const formAction = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("State saat ini:", state);
+    // console.log("State saat ini:", state);
 
     let hasError = false;
     const errorState: FormState["error"] = {
@@ -44,12 +44,12 @@ const CreateFormDebt = () => {
     };
 
     if (!state.amount || isNaN(Number(state.amount))) {
-      errorState.amount = "Jumlah harus berupa angka yang valid";
+      errorState.amount = "Jumlah harus di isi";
       hasError = true;
     }
 
     if (!state.user) {
-      errorState.user = "Pilih pengguna yang valid";
+      errorState.user = "Pilih nama pengguna";
       hasError = true;
     }
 
@@ -67,7 +67,7 @@ const CreateFormDebt = () => {
         : "";
 
     try {
-      console.log("Mengirim data ke saveAmount...");
+      // console.log("Mengirim data ke saveAmount...");
 
       setPending(true);
 
@@ -76,7 +76,7 @@ const CreateFormDebt = () => {
         amount: cleanedAmount,
       });
 
-      console.log("Hasil dari saveAmount:", result);
+      // console.log("Hasil dari saveAmount:", result);
 
       if ("error" in result) {
         console.error("Gagal menyimpan data:", result.error);
@@ -89,13 +89,13 @@ const CreateFormDebt = () => {
           },
         }));
       } else if ("message" in result) {
-        console.log("Pesan sukses:", result.message);
-        router.push("/dashboard/debt"); // Redirect to the debt dashboard
+        // console.log("Pesan sukses:", result.message);
+        router.push("/dashboard/debt");
       }
     } catch (error) {
       console.error("Terjadi kesalahan saat menyimpan data", error);
     } finally {
-      setPending(false); // End the saving process
+      setPending(false);
     }
   };
 

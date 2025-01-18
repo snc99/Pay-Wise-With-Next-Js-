@@ -7,4 +7,7 @@ Langkah-langkah untuk Push ke GitHub
 4. git push origin main
 
 
-
+Tarik Perubahan (Pull) dari Remote
+1. git fetch (tarik dari github ke local)
+2. git checkout developer 
+3. git pull origin developer

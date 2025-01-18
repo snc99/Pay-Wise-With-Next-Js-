@@ -41,7 +41,7 @@ export const saveAmount = async (prevState: any) => {
 
     return { message: "Success" };
   } catch (error) {
-    console.error("Error creating debt:", error);
+    // console.error("Error creating debt:", error);
     return { error: { amount: ["Failed to create debt"] } };
   }
 };
@@ -53,7 +53,7 @@ export const deleteDebt = async (id: string) => {
     });
     return { message: "Debt successfully deleted" };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return { message: "Failed to delete debt" };
   } finally {
     revalidatePath("/dashboard/debt");

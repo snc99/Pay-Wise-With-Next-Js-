@@ -7,12 +7,11 @@ import { deleteDebt } from "@/lib/actionsDebt";
 import Swal from "sweetalert2";
 import { FaSackDollar } from "react-icons/fa6";
 
-// Tombol untuk navigasi ke halaman pembuatan tagihan
 export const CreateDebt = () => {
   return (
     <Link
       href="/dashboard/debt/create"
-      className="bg-blue-400 hover:bg-blue-300 inline-flex items-center space-x-2 rounded-lg px-5 py-2 text-sm font-medium text-black transition duration-200 hover:text-gray-700 hover:shadow-md"
+      className="inline-flex items-center space-x-2 rounded-lg bg-blue-400 px-5 py-2 text-sm font-medium text-black transition duration-200 hover:bg-blue-300 hover:text-gray-700 hover:shadow-md"
     >
       <FaSackDollar size={20} className="text-black" />
       <span>Tambah Tagihan</span>
@@ -20,7 +19,6 @@ export const CreateDebt = () => {
   );
 };
 
-// Tombol untuk menyimpan atau memperbarui data
 export const SubmitButtonAmount = ({
   label,
   pending,
@@ -86,7 +84,6 @@ export const DeleteDebt = ({ id }: { id: string }) => {
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Konfirmasi dengan SweetAlert sebelum menghapus
     const result = await Swal.fire({
       title: "Apakah Anda yakin?",
       text: "Data ini akan dihapus permanen!",
@@ -96,12 +93,9 @@ export const DeleteDebt = ({ id }: { id: string }) => {
       cancelButtonText: "Batal",
     });
 
-    // Jika pengguna mengonfirmasi penghapusan
     if (result.isConfirmed) {
-      // Menjalankan penghapusan
       const deleteResult = await deleteDebt(id);
 
-      // Pastikan deleteResult memiliki message sebelum mengaksesnya
       if (
         deleteResult &&
         deleteResult.message === "Debt successfully deleted"

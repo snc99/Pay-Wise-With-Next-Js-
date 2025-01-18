@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export default function AutoLogout() {
-  const SESSION_TIMEOUT = 30 * 1000; // 30 detik
+  const SESSION_TIMEOUT = 30 * 60 * 1000;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -13,33 +13,37 @@ export default function AutoLogout() {
     const resetTimer = () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        // Tampilkan pesan SweetAlert dengan tombol OK
         Swal.fire({
-          title: "Sesi Berakhir",
-          text: "Sesi Anda telah berakhir karena tidak ada aktivitas. Anda akan logout.",
-          icon: "warning",
-          confirmButtonText: "OK",
-        }).then(() => {
-          // Logout setelah pengguna menekan tombol OK
-          signOut();
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Sesi Anda telah berakhir",
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
         });
+
+        setTimeout(() => {
+          signOut();
+        }, 5000);
       }, SESSION_TIMEOUT);
     };
 
-    // Deteksi aktivitas pengguna (klik, gerakan mouse, atau keyboard)
     window.addEventListener("mousemove", resetTimer);
     window.addEventListener("keypress", resetTimer);
 
-    // Atur timer pertama kali
     resetTimer();
 
     return () => {
-      // Bersihkan event listener dan timer saat komponen dilepas
       clearTimeout(timer);
       window.removeEventListener("mousemove", resetTimer);
       window.removeEventListener("keypress", resetTimer);
     };
   }, []);
 
-  return null; // Komponen ini hanya berfungsi sebagai listener
+  return null;
 }

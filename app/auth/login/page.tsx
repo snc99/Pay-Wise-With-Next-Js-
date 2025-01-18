@@ -4,17 +4,18 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import LoginLayout from "./layout";
 import Alert from "@/app/components/sweetalert/AlertButton";
+import Image from "next/image";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Menambahkan state untuk loading
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setIsLoading(true); // Set loading menjadi true sebelum proses login
+    setIsLoading(true);
 
     try {
       const result = await signIn("credentials", {
@@ -24,32 +25,31 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        setError(result.error); // Atur error jika terjadi kesalahan
+        setError(result.error);
       } else {
-        window.location.href = "/dashboard"; // Redirect ke dashboard jika login sukses
+        window.location.href = "/dashboard";
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
     } finally {
-      setIsLoading(false); // Set loading menjadi false setelah proses login selesai
+      setIsLoading(false);
     }
   };
 
   const handleAlertClose = () => {
-    setError(null); // Reset error setelah alert ditutup
+    setError(null);
   };
 
   return (
     <>
       <LoginLayout>
-        {/* Komponen Alert hanya muncul jika ada error */}
         <Alert
           title="Login Failed"
           text={error || ""}
           icon="error"
           confirmButtonText="Try Again"
-          trigger={!!error} // Trigger alert hanya saat error ada
-          onClose={handleAlertClose} // Callback setelah alert ditutup
+          trigger={!!error}
+          onClose={handleAlertClose}
         />
 
         <form
@@ -57,10 +57,12 @@ export default function LoginForm() {
           className="mx-auto flex max-w-sm flex-col space-y-6 rounded-xl bg-white p-6 shadow-lg"
         >
           <div className="mb-6 flex justify-center">
-            <img
+            <Image
               src="https://placehold.co/600x400.png"
               alt="Logo"
-              className="h-24 w-24 rounded-full"
+              width={96} // Sesuaikan dengan `className="h-24 w-24"` (24 * 4 = 96px)
+              height={96} // Sama dengan width untuk mempertahankan proporsi lingkaran
+              className="rounded-full"
             />
           </div>
           <div className="relative">
@@ -70,7 +72,7 @@ export default function LoginForm() {
               onChange={(e) => setEmail(e.target.value)}
               id="email"
               placeholder="Email"
-              className="focus:ring-blue-500 input input-bordered w-full rounded-lg p-3 text-gray-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2"
+              className="input input-bordered w-full rounded-lg p-3 text-gray-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="relative">
@@ -80,18 +82,18 @@ export default function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               id="password"
               placeholder="Password"
-              className="focus:ring-blue-500 input input-bordered w-full rounded-lg p-3 text-gray-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2"
+              className="input input-bordered w-full rounded-lg p-3 text-gray-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
-            disabled={isLoading} // Disable tombol jika loading
-            className={`button-login w-full rounded-lg bg-blue-new py-3 font-semibold text-white shadow-md hover:bg-blue ${
+            disabled={isLoading}
+            className={`button-login bg-blue-new hover:bg-blue w-full rounded-lg py-3 font-semibold text-white shadow-md ${
               isLoading ? "cursor-not-allowed" : ""
-            }`} // Menambahkan kelas cursor-not-allowed jika isLoading true
+            }`}
           >
             {isLoading ? (
-              <span className="loading loading-spinner loading-md"></span> // Menampilkan loading spinner jika isLoading true
+              <span className="loading loading-spinner loading-md"></span>
             ) : (
               "Login"
             )}

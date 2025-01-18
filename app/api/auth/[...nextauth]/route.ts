@@ -42,9 +42,9 @@ const authOptions: AuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt", 
-    maxAge: 30 * 60,  
-    updateAge: 15 * 60, 
+    strategy: "jwt",
+    maxAge: 30 * 60,
+    updateAge: 10 * 60,
   },
   callbacks: {
     async jwt({
@@ -55,13 +55,13 @@ const authOptions: AuthOptions = {
       user?: { id: string; name?: string | null; email: string };
     }) {
       if (user) {
-        token.id = user.id; 
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
-        session.user.id = token.id as string; 
+        session.user.id = token.id as string;
       }
       return session;
     },

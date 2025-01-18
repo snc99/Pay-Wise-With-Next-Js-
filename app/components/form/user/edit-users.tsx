@@ -26,7 +26,7 @@ const UpdateFormUser = ({ user }: { user: Users }) => {
             defaultValue={user.name}
           />
           <div id="name-error " arial-live="polite" aria-atomic="true">
-            <p className="text-red mt-2 text-sm">{state?.error?.name}</p>
+            <p className="mt-2 text-sm text-red-500">{state?.error?.name}</p>
           </div>
         </div>
         <div className="mb-5">
@@ -42,10 +42,10 @@ const UpdateFormUser = ({ user }: { user: Users }) => {
             defaultValue={user.phone}
           />
           <div id="phone-error " arial-live="polite" aria-atomic="true">
-            <p className="text-red mt-2 text-sm">{state?.error?.phone}</p>
+            <p className="mt-2 text-sm text-red-500">{state?.error?.phone}</p>
           </div>
           <div id="message-error " arial-live="polite" aria-atomic="true">
-            <p className="text-red mt-2 text-sm">{state?.message}</p>
+            <p className="mt-2 text-sm text-red-500">{state?.message}</p>
           </div>
           <div className="flex gap-x-4">
             <SubmitButton label="update" />
