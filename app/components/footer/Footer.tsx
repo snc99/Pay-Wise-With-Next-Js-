@@ -4,11 +4,11 @@ export default function Footer() {
   return (
     <main>
       {/* Section Footer */}
-      <footer className="footer footer-center bg-blue p-4 text-base-content">
+      <footer className="footer footer-center bg-base-300 p-4 text-base-content">
         <aside>
-          <p>
-            Copyright © {new Date().getFullYear()} - All right reserved by
-            Irvan Sandy
+          <p className="text-center text-sm sm:text-base">
+            Copyright © {new Date().getFullYear()} - All rights reserved by{" "}
+            <span className="font-bold">Irvan Sandy</span>
           </p>
         </aside>
       </footer>

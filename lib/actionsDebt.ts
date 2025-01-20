@@ -39,6 +39,8 @@ export const saveAmount = async (prevState: any) => {
 
     // console.log("Data yang dikirim:", validateField.data);
 
+    revalidatePath("/dashboard/debt");
+
     return { message: "Success" };
   } catch (error) {
     // console.error("Error creating debt:", error);

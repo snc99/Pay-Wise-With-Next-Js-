@@ -17,7 +17,7 @@ const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+          throw new Error("Email and password wajib di isi");
         }
 
         const admin = await prisma.admin.findUnique({
@@ -25,7 +25,7 @@ const authOptions: AuthOptions = {
         });
 
         if (!admin) {
-          throw new Error("No user found with the email");
+          throw new Error("Email yang anda masukan belum terdaftar");
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -34,7 +34,7 @@ const authOptions: AuthOptions = {
         );
 
         if (!isPasswordValid) {
-          throw new Error("Invalid password");
+          throw new Error("Password yang anda masukan salah");
         }
 
         return { id: admin.id, name: admin.name, email: admin.email };

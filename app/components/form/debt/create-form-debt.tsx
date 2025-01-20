@@ -7,6 +7,7 @@ import { SubmitButtonAmount } from "@/app/components/button/buttonDebt";
 import SearchUserDropdown from "@/app/components/search/SearchUserDropdown";
 import AmountInput from "@/app/components/amountInput/amountInput";
 import { BackButton } from "../../button/buttonBack";
+import Swal from "sweetalert2";
 
 type SaveAmountResult =
   | { error: { amount?: string[]; user?: string[] } }
@@ -24,6 +25,18 @@ export interface FormState {
 const CreateFormDebt = () => {
   const router = useRouter();
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
   const [state, setState] = useState<FormState>({
     amount: null,
     user: null,
@@ -35,16 +48,15 @@ const CreateFormDebt = () => {
   const formAction = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // console.log("State saat ini:", state);
-
     let hasError = false;
     const errorState: FormState["error"] = {
       amount: null,
       user: null,
     };
 
+    // Validasi input form
     if (!state.amount || isNaN(Number(state.amount))) {
-      errorState.amount = "Jumlah harus di isi";
+      errorState.amount = "Jumlah harus di isi dan berupa angka";
       hasError = true;
     }
 
@@ -54,10 +66,18 @@ const CreateFormDebt = () => {
     }
 
     if (hasError) {
+      // Set error state jika ada error
       setState((prevState) => ({
         ...prevState,
         error: errorState,
       }));
+
+      // Tampilkan Toast error
+      // Toast.fire({
+      //   icon: "error",
+      //   title: "Terdapat kesalahan pada form",
+      // });
+
       return;
     }
 
@@ -67,8 +87,6 @@ const CreateFormDebt = () => {
         : "";
 
     try {
-      // console.log("Mengirim data ke saveAmount...");
-
       setPending(true);
 
       const result: SaveAmountResult = await saveAmount({
@@ -76,10 +94,8 @@ const CreateFormDebt = () => {
         amount: cleanedAmount,
       });
 
-      // console.log("Hasil dari saveAmount:", result);
-
       if ("error" in result) {
-        console.error("Gagal menyimpan data:", result.error);
+        // Set error state jika ada error dari server
         setState((prevState) => ({
           ...prevState,
           error: {
@@ -88,8 +104,20 @@ const CreateFormDebt = () => {
             user: result.error.user ? result.error.user[0] : null,
           },
         }));
+
+        // Tampilkan Toast error dari server
+        // Toast.fire({
+        //   icon: "error",
+        //   title: "Gagal menyimpan data",
+        // });
       } else if ("message" in result) {
-        // console.log("Pesan sukses:", result.message);
+        // Tampilkan Toast sukses
+        Toast.fire({
+          icon: "success",
+          title: "Data berhasil disimpan",
+        });
+
+        // Redirect ke halaman debt setelah sukses
         router.push("/dashboard/debt");
       }
     } catch (error) {

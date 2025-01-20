@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { createContext, useContext, useState, ReactNode } from "react";
 
-
 interface ToastContextProps {
   showToast: boolean;
   setToastShown: () => void;
@@ -32,10 +31,7 @@ export default function Toast({ icon, title }: ToastProps) {
   return null; // Komponen ini hanya digunakan untuk menampilkan toast, tidak ada elemen UI yang ditampilkan
 }
 
-
 // ToastContext.tsx
-
-
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
 

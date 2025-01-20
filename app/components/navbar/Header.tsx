@@ -6,102 +6,78 @@ import { useRouter } from "next/navigation";
 import { MdOutlineLogin } from "react-icons/md";
 import ThemeToggle from "@/app/components/button/themeToggle";
 
-
 export default function Header() {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("");
-
-  const handleScroll = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State untuk menu toggle
 
   useEffect(() => {
     const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+    sections.forEach((section) => observer.observe(section));
 
     return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
-      });
+      sections.forEach((section) => observer.unobserve(section));
     };
   }, []);
 
   return (
-    <main>
-      <header className="z-1 container fixed inset-0 mx-auto flex h-[58px] items-center justify-between">
-        <div className="text-xl font-bold">Pay Wise</div>
-        <nav>
-          <ul className="flex items-center justify-center gap-4">
-            <li>
+    <header className="fixed left-0 right-0 top-0 z-10 mx-auto flex items-center justify-between bg-white px-4 py-2 shadow-md">
+      <div className={`text-xl font-bold ${isMenuOpen ? "hidden" : "block"}`}>
+        Pay Wise
+      </div>
+
+      <button
+        className="text-2xl lg:hidden"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        &#9776;
+      </button>
+
+      <nav
+        aria-label="Main navigation"
+        className={`${
+          isMenuOpen ? "block" : "hidden"
+        } w-full lg:block lg:w-auto`}
+      >
+        <ul className="flex flex-col items-center gap-4 sm:gap-6 lg:flex-row lg:gap-8">
+          {["Home", "About", "Debt", "Services", "Contact"].map((section) => (
+            <li key={section}>
               <Link
-                href="#Home"
-                onClick={() => handleScroll("Home")}
-                className={activeSection === "Home" ? "active" : ""}
+                href={`#${section}`}
+                className={
+                  activeSection === section
+                    ? "font-bold text-gray-500"
+                    : "text-[#7dd3fc]"
+                }
               >
-                Home
+                {section}
               </Link>
             </li>
-            <li>
-              <Link
-                href="#About"
-                onClick={() => handleScroll("About")}
-                className={activeSection === "About" ? "active" : ""}
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#Debt"
-                onClick={() => handleScroll("Debt")}
-                className={activeSection === "Debt" ? "active" : ""}
-              >
-                Pencatatan
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#Services"
-                onClick={() => handleScroll("Services")}
-                className={activeSection === "Services" ? "active" : ""}
-              >
-                Layanan
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#Contact"
-                onClick={() => handleScroll("Contact")}
-                className={activeSection === "Contact" ? "active" : ""}
-              >
-                Kontak
-              </Link>
-            </li>
+          ))}
+          <li>
             <button
-              className="button-login"
+              className="button-login flex items-center gap-2 rounded px-4 py-2 text-blue-500"
               onClick={() => router.push("/auth/login")}
             >
-              <span className="flex items-center">
-                Login <MdOutlineLogin size={20} />
-              </span>
+              Login <MdOutlineLogin size={20} />
             </button>
-                  <ThemeToggle />
-          </ul>
-        </nav>
-      </header>
-    </main>
+          </li>
+          <li>
+            <ThemeToggle />
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 }
