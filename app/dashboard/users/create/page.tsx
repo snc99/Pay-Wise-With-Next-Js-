@@ -1,5 +1,5 @@
 import React from "react";
-import CreateFormUser from "@/app/components/form/user/create-form-user";
+import CreateFormUser from "@/app/components/form/user/createFormUser";
 
 const CreateUserPage = () => {
   return (

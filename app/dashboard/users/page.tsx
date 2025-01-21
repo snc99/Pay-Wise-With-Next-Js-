@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { FaPlus } from "react-icons/fa";
-import TableUser from "@/app/components/table/table-user";
+import TableUser from "@/app/components/table/tableUser";
 import SearchInTable from "@/app/components/search/SearchInTable";
+import Pagination from "@/app/components/pagination/pagination";
 import { CreateUsers } from "@/app/components/button/buttonUser";
 import { getUsersPages } from "@/lib/dataUser";
-import Pagination from "@/app/components/pagination/pagination";
 
 const UserPage = async ({
   searchParams,

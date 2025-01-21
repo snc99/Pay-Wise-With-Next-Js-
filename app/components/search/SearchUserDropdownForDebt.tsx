@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Select from "react-select";
 import axios from "axios";
-import { FormState } from "@/app/components/form/debt/create-form-debt";
+import { FormState } from "@/app/components/form/debt/createFormDebt";
 import { useState, useEffect } from "react";
 
 // Tipe props untuk SearchUserDropdown

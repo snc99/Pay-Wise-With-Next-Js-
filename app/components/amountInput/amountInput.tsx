@@ -1,6 +1,6 @@
 import React from "react";
 import { NumericFormat } from "react-number-format";
-import { FormState } from "@/app/components/form/debt/create-form-debt";
+import { FormState } from "@/app/components/form/debt/createFormDebt";
 
 // Menambahkan tipe props untuk AmountInput
 interface AmountInputProps {

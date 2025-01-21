@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { saveAmount } from "@/lib/actionsDebt";
 import { SubmitButtonAmount } from "@/app/components/button/buttonDebt";
-import SearchUserDropdown from "@/app/components/search/SearchUserDropdown";
+import SearchUserDropdown from "@/app/components/search/SearchUserDropdownForDebt";
 import AmountInput from "@/app/components/amountInput/amountInput";
 import { BackButton } from "../../button/buttonBack";
 import Swal from "sweetalert2";

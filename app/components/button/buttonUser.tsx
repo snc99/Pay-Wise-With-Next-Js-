@@ -4,11 +4,9 @@ import Link from "next/link";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { TbTrashXFilled } from "react-icons/tb";
 import { PiPencilSimpleLineFill } from "react-icons/pi";
-import { useFormStatus } from "react-dom";
 import clsx from "clsx";
 import { deleteUser } from "@/lib/actionsUser";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
 
 export const CreateUsers = () => {
   return (

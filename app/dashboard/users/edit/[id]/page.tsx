@@ -1,4 +1,4 @@
-import UpdateFormUser from "@/app/components/form/user/edit-users";
+import UpdateFormUser from "@/app/components/form/user/editUsers";
 import { getUsersById } from "@/lib/dataUser";
 import { notFound } from "next/navigation";
 

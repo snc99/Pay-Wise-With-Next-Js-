@@ -1,6 +1,6 @@
 import React from "react";
 import SearchInTable from "@/app/components/search/SearchInTable";
-import TableDebt from "@/app/components/table/tabel-debt";
+import TableDebt from "@/app/components/table/tableDebt";
 import { CreateDebt } from "@/app/components/button/buttonDebt";
 import Pagination from "@/app/components/pagination/pagination";
 import { getUsersPages } from "@/lib/dataUser";

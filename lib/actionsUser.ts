@@ -6,9 +6,13 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 const UserSchema = z.object({
-  name: z.string().min(4, "Nama harus memiliki minimal 4 karakter."),
+  name: z
+    .string()
+    .nonempty("Nama telepon harus diisi.")
+    .min(3, "Nama harus memiliki minimal 3 karakter."),
   phone: z
     .string()
+    .nonempty("Nomor telepon harus diisi.")
     .regex(/^[0-9]+$/, "Nomor telepon harus berupa angka.")
     .min(10, "Nomor telepon harus memiliki minimal 10 angka.")
     .max(14, "Nomor telepon harus memiliki maksimal 14 angka."),
@@ -24,7 +28,6 @@ export const saveUser = async (formData: FormData) => {
   }
 
   try {
-    // Menyimpan data ke database
     await prisma.users.create({
       data: {
         name: validateField.data.name,
@@ -44,18 +47,15 @@ export const updateUser = async (
   prevState: any,
   formData: FormData,
 ) => {
-  // Validasi data form menggunakan UserSchema
   const validateField = UserSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
   if (!validateField.success) {
-    // Kembalikan error jika validasi gagal
     return { error: validateField.error.flatten().fieldErrors };
   }
 
   try {
-    // Update data user di database
     await prisma.users.update({
       data: {
         name: validateField.data.name,
@@ -64,12 +64,11 @@ export const updateUser = async (
       where: { id },
     });
 
-    // // Revalidasi cache dan redirect ke halaman users
     revalidatePath("/dashboard/users");
 
     return { success: true, message: "User berhasil diupdate" };
   } catch (error: any) {
-    console.error("Error update user:", error); // Log detail error untuk debugging
+    // console.error("Error update user:", error);
     return {
       success: false,
       message: "Failed to update user",
@@ -83,10 +82,11 @@ export const deleteUser = async (id: string) => {
     await prisma.users.delete({
       where: { id },
     });
-    return { message: "User successfully deleted" }; // Pastikan mengembalikan objek dengan message
+
+    return { message: "User successfully deleted" };
   } catch (error) {
-    console.error(error);
-    return { message: "Failed to delete user" }; // Kembalikan pesan error jika gagal
+    // console.error(error);
+    return { message: "Failed to delete user" };
   } finally {
     revalidatePath("/dashboard/users");
   }

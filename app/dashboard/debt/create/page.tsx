@@ -1,5 +1,5 @@
 import React from "react";
-import CreateFormDebt from "@/app/components/form/debt/create-form-debt";
+import CreateFormDebt from "@/app/components/form/debt/createFormDebt";
 
 const CreateDebtPage = () => {
   return (
