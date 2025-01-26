@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Debt" ADD COLUMN     "totalDebt" DECIMAL(65,30) NOT NULL DEFAULT 0;

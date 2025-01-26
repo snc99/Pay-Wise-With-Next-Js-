@@ -4,8 +4,9 @@ import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+// Validasi data pembayaran
 const PaymentSchema = z.object({
-  debt: z.string().min(1, { message: "ID Hutang wajib diisi" }), // ID Debt yang terkait
+  debt: z.string().min(1, { message: "ID Hutang wajib diisi" }), // ID hutang yang terkait
   amountPaid: z
     .string()
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
@@ -14,7 +15,6 @@ const PaymentSchema = z.object({
 });
 
 export const savePayment = async (paymentData: any) => {
-  // Validasi input
   const validateField = PaymentSchema.safeParse(paymentData);
 
   if (!validateField.success) {
@@ -29,57 +29,75 @@ export const savePayment = async (paymentData: any) => {
       },
     };
   }
-  console.log("Data validasi pembayaran:", validateField.data); // Log data
+
   const { debt, amountPaid } = validateField.data;
-  console.log("Received debt ID:", debt); // Memastikan debt diterima dengan benar
-  console.log("Received amountPaid:", amountPaid);
 
   try {
-    const { debt, amountPaid } = validateField.data;
+    console.log("Received user ID for payment:", debt);
+    console.log("Received amountPaid:", amountPaid);
 
-    // Cari data hutang terkait
-    console.log("Received debt ID:", debt);
-    const relatedDebt = await prisma.debt.findFirst({
-      where: { users_id: debt },
+    // Cari semua catatan hutang pengguna
+    const allDebts = await prisma.debt.findMany({
+      where: { users_id: debt }, // Ambil semua hutang terkait pengguna
+      orderBy: { createdAt: "asc" }, // Urutkan hutang berdasarkan waktu (prioritas lunas)
     });
-    console.log("Related debt found:", relatedDebt);
 
-    if (!relatedDebt) {
+    if (allDebts.length === 0) {
       return { error: { debt: ["Data hutang tidak ditemukan"] } };
     }
 
-    // Hitung sisa pembayaran
-    const remainingAmount = relatedDebt.amount.sub(
-      new Prisma.Decimal(amountPaid.replace(/[^0-9.-]+/g, "")),
-    );
+    console.log("All related debts found:", allDebts);
 
-    if (remainingAmount.lt(0)) {
-      return {
-        error: {
-          amountPaid: ["Jumlah pembayaran melebihi sisa hutang"],
-        },
-      };
+    // Hitung total pembayaran
+    const paidAmountDecimal = new Prisma.Decimal(
+      amountPaid.replace(/[^0-9.-]+/g, ""),
+    );
+    let remainingPayment = paidAmountDecimal;
+
+    // Proses pembayaran untuk semua hutang
+    for (const debt of allDebts) {
+      if (remainingPayment.isZero()) break;
+
+      const debtRemaining = debt.amount; // Sisa hutang pada catatan ini
+      if (remainingPayment.greaterThanOrEqualTo(debtRemaining)) {
+        // Jika pembayaran lebih besar atau sama dengan sisa hutang
+        await prisma.debt.update({
+          where: { id: debt.id },
+          data: { amount: new Prisma.Decimal(0) }, // Hutang lunas
+        });
+        remainingPayment = remainingPayment.sub(debtRemaining);
+      } else {
+        // Jika pembayaran lebih kecil dari sisa hutang
+        await prisma.debt.update({
+          where: { id: debt.id },
+          data: { amount: debtRemaining.sub(remainingPayment) }, // Kurangi sisa hutang
+        });
+        remainingPayment = new Prisma.Decimal(0); // Semua pembayaran sudah habis
+      }
     }
 
-    // Simpan data pembayaran
+    // Hitung ulang total sisa hutang pengguna
+    const updatedDebts = await prisma.debt.findMany({
+      where: { users_id: debt },
+    });
+    const totalRemainingDebt = updatedDebts.reduce(
+      (total, debt) => total.add(debt.amount),
+      new Prisma.Decimal(0),
+    );
+
+    // Simpan pembayaran
     await prisma.payment.create({
       data: {
-        debt_record_id: relatedDebt.id, // Pastikan ini adalah ID yang valid
-        amount_paid: amountPaid.toString(), // Pastikan tipe data string
-        remaining_amount: remainingAmount, // Decimal untuk remaining_amount
-        payment_date: new Date(), // Tanggal pembayaran saat ini
+        debt_record_id: allDebts[0].id, // Rekam pembayaran ke salah satu hutang
+        amount_paid: paidAmountDecimal.toString(),
+        remaining_amount: totalRemainingDebt.toString(), // Total sisa hutang pengguna
+        payment_date: new Date(),
       },
     });
 
-    // Perbarui sisa hutang terkait
-    await prisma.debt.update({
-      where: { id: relatedDebt.id },
-      data: {
-        amount: remainingAmount,
-      },
-    });
+    console.log("Updated remaining debt:", totalRemainingDebt.toString());
 
-    // Revalidate path untuk memperbarui data di UI
+    // Revalidate path untuk memperbarui UI
     revalidatePath("/dashboard/payment");
 
     return { message: "Pembayaran berhasil dibuat" };

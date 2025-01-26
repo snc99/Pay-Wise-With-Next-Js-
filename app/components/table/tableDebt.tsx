@@ -39,12 +39,13 @@ const TableDebt = async ({
                 <td>{index + 1}</td>
                 <td>{debt.user.name}</td>
                 <td>{formatDate(debt.createdAt.toString())}</td>
-                <td>
+                <td>Rp {debt.totalDebt.toLocaleString()}</td>
+                {/* <td>
                   {parseFloat(debt.amount.toString()).toLocaleString("id-ID", {
                     style: "currency",
                     currency: "IDR",
                   })}
-                </td>
+                </td> */}
                 <td className="flex justify-center gap-1 py-3">
                   <DeleteDebt id={debt.id} />
                 </td>

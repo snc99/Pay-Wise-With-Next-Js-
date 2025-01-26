@@ -1,5 +1,3 @@
-// Query data debt
-
 import { prisma } from "@/lib/prisma";
 
 const ITEMS_PER_PAGE = 5;
@@ -24,14 +22,16 @@ export const getDebt = async (query: string, currentPage: number) => {
             name: true,
           },
         },
+        // Tidak perlu menambahkan totalDebt dalam include, karena totalDebt adalah field dari model Debt
       },
       orderBy: {
         createdAt: "desc",
       },
     });
+
     return debt;
   } catch (error) {
     console.error("Error fetching debt data:", error);
-    throw new Error("gagal Mengambil data");
+    throw new Error("Gagal Mengambil data");
   }
 };
