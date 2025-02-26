@@ -4,14 +4,14 @@ export const BackButton = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.back(); // Mengarahkankan ke halaman sebelumnya
+    router.back();
   };
 
   return (
     <button
       type="button"
       onClick={handleBack}
-      className="border-blue-600 text-blue-600 hover:bg-blue-100 flex items-center rounded-md border bg-white px-4 py-1 text-sm font-bold shadow-md transition duration-300"
+      className="flex items-center rounded-md border border-blue-600 bg-white px-4 py-1 text-sm font-bold text-blue-600 shadow-md transition duration-300 hover:bg-blue-100"
     >
       <svg
         className="mr-2 h-4 w-4"

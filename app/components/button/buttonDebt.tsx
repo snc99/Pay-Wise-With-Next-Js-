@@ -81,9 +81,7 @@ export const SubmitButtonAmount = ({
 };
 
 export const DeleteDebt = ({ id }: { id: string }) => {
-  const handleDelete = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleDelete = async () => {
     const result = await Swal.fire({
       title: "Apakah Anda yakin?",
       text: "Data ini akan dihapus permanen!",
@@ -96,10 +94,7 @@ export const DeleteDebt = ({ id }: { id: string }) => {
     if (result.isConfirmed) {
       const deleteResult = await deleteDebt(id);
 
-      if (
-        deleteResult &&
-        deleteResult.message === "Debt successfully deleted"
-      ) {
+      if (deleteResult?.message === "Debt successfully deleted") {
         await Swal.fire("Terhapus!", "Hutang berhasil dihapus.", "success");
       } else {
         await Swal.fire("Gagal!", "Gagal menghapus hutang.", "error");
@@ -108,13 +103,11 @@ export const DeleteDebt = ({ id }: { id: string }) => {
   };
 
   return (
-    <form onSubmit={handleDelete}>
-      <button
-        type="submit"
-        className="rounded-sm border p-1 hover:bg-gray-200 hover:text-black"
-      >
-        <TbTrashXFilled size={20} />
-      </button>
-    </form>
+    <button
+      onClick={handleDelete}
+      className="rounded-sm border p-1 hover:bg-gray-200 hover:text-black"
+    >
+      <TbTrashXFilled size={20} />
+    </button>
   );
 };

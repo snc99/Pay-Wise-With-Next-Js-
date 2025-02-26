@@ -1,9 +1,9 @@
-import Home from "./components/home/Home";
-import About from "./components/about/About";
+import Home from "./components/landingPage/Home";
+import About from "./components/landingPage/About";
 import Dept from "./components/Debt/Debt";
-import Services from "./components/services/Services";
-import Contact from "./components/contact/Contact";
-import Header from "./components/navbar/Header";
+import Services from "./components/landingPage/Services";
+import Contact from "./components/landingPage/Contact";
+import Header from "./components/landingPage/Header";
 import Footer from "./components/footer/Footer";
 
 export default function Page() {

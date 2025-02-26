@@ -64,7 +64,6 @@ export const saveAmount = async (prevState: any) => {
       console.log("Entri hutang baru berhasil dibuat.");
     }
 
-    // Revalidate path untuk memperbarui UI
     console.log("Memperbarui UI dengan revalidatePath...");
     revalidatePath("/dashboard/debt");
 
@@ -75,47 +74,16 @@ export const saveAmount = async (prevState: any) => {
     return { error: "Gagal mencatat hutang" };
   }
 };
-// export const saveAmount = async (prevState: any) => {
-//   // Validasi input
-//   const validateField = DebtSchema.safeParse(prevState);
 
-//   // Jika validasi gagal, kirimkan error
-//   if (!validateField.success) {
-//     return {
-//       error: {
-//         amount: validateField.error.errors
-//           .filter((e) => e.path[0] === "amount")
-//           .map((e) => e.message),
-//         user: validateField.error.errors
-//           .filter((e) => e.path[0] === "user")
-//           .map((e) => e.message),
-//       },
-//     };
-//   }
+export const deleteDebt = async (id: string) => {
+  try {
+    await prisma.debt.delete({
+      where: { id },
+    });
 
-//   try {
-//     // Mengonversi amount dan totalDebt menjadi decimal
-//     const amount = new Prisma.Decimal(
-//       validateField.data.amount.replace(/[^0-9.-]+/g, ""),
-//     );
-
-//     // Menyimpan data ke database dengan totalDebt
-//     await prisma.debt.create({
-//       data: {
-//         users_id: validateField.data.user, // ID user yang terhubung dengan debt
-//         amount: amount, // Jumlah hutang yang perlu dibayar
-//         totalDebt: amount, // Total tagihan awal
-//       },
-//     });
-
-//     // Revalidate halaman untuk memuat ulang data
-//     revalidatePath("/dashboard/debt");
-
-//     // Mengembalikan pesan sukses
-//     return { message: "Debt created successfully" };
-//   } catch (error) {
-//     // Menangani error dan mencetak pesan error
-//     console.error("Error creating debt:", error);
-//     return { error: { amount: ["Failed to create debt"] } };
-//   }
-// };
+    revalidatePath("/dashboard/debt");
+    return { message: "Debt successfully deleted" };
+  } catch (error) {
+    return { message: "Failed to delete debt" };
+  }
+};
